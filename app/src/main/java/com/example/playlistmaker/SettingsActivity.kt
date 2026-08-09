@@ -1,6 +1,5 @@
 package com.example.playlistmaker
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
@@ -21,8 +20,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     fun openMainScreen() {
-        val mainIntent = Intent(this, MainActivity::class.java)
-        startActivity(mainIntent)
+        finish()
     }
 
     fun initViews() {

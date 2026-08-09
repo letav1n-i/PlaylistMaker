@@ -20,7 +20,7 @@
             android:layout_width="@dimen/toolbar_icon_size"
             android:layout_height="@dimen/toolbar_icon_size"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_arrow_back" />
+            android:src="@drawable/ic_arrow_back_24" />
 
         <TextView
             android:layout_width="match_parent"
@@ -63,7 +63,7 @@
             android:text="@string/share_app"
             android:textColor="@color/YP_black"
             android:textSize="@dimen/small_text_size"
-            app:drawableEndCompat="@drawable/ic_share" />
+            app:drawableEndCompat="@drawable/ic_share_24" />
 
         <TextView
             android:layout_width="match_parent"
@@ -76,7 +76,7 @@
             android:text="@string/write_to_support"
             android:textColor="@color/YP_black"
             android:textSize="@dimen/small_text_size"
-            app:drawableEndCompat="@drawable/ic_support" />
+            app:drawableEndCompat="@drawable/ic_support_24" />
 
         <TextView
             android:layout_width="match_parent"
@@ -89,7 +89,7 @@
             android:text="@string/user_agreement"
             android:textColor="@color/YP_black"
             android:textSize="@dimen/small_text_size"
-            app:drawableEndCompat="@drawable/ic_arrow_right" />
+            app:drawableEndCompat="@drawable/ic_arrow_right_24" />
     </LinearLayout>
 
 
