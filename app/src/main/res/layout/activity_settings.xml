@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/YP_white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_marginBottom="@dimen/toolbar_indent_to_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/toolbar_basic_padding">
+
+        <ImageButton
+            android:id="@+id/back_btn_toolbar"
+            android:layout_width="@dimen/toolbar_icon_size"
+            android:layout_height="@dimen/toolbar_icon_size"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_back_24" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/toolbar_title_padding"
+            android:layout_marginRight="@dimen/toolbar_title_padding"
+            android:fontFamily="@font/ys_text_medium"
+            android:text="@string/settings"
+            android:textColor="@color/YP_black"
+            android:textSize="@dimen/default_text_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding">
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ys_text_regular"
+            android:paddingTop="@dimen/large_padding"
+            android:paddingBottom="@dimen/large_padding"
+            android:text="@string/dark_mode"
+            android:textColor="@color/YP_black"
+            android:textSize="@dimen/small_text_size"
+            tools:checked="true"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/icon_padding_from_text"
+            android:fontFamily="@font/ys_text_regular"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/large_padding"
+            android:paddingBottom="@dimen/large_padding"
+            android:text="@string/share_app"
+            android:textColor="@color/YP_black"
+            android:textSize="@dimen/small_text_size"
+            app:drawableEndCompat="@drawable/ic_share_24" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/icon_padding_from_text"
+            android:fontFamily="@font/ys_text_regular"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/large_padding"
+            android:paddingBottom="@dimen/large_padding"
+            android:text="@string/write_to_support"
+            android:textColor="@color/YP_black"
+            android:textSize="@dimen/small_text_size"
+            app:drawableEndCompat="@drawable/ic_support_24" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/icon_padding_from_text"
+            android:fontFamily="@font/ys_text_regular"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/large_padding"
+            android:paddingBottom="@dimen/large_padding"
+            android:text="@string/user_agreement"
+            android:textColor="@color/YP_black"
+            android:textSize="@dimen/small_text_size"
+            app:drawableEndCompat="@drawable/ic_arrow_right_24" />
+    </LinearLayout>
+
+
+</LinearLayout>
