@@ -11,6 +11,7 @@
     <dimen name="toolbar_basic_padding">4dp</dimen>
     <dimen name="toolbar_indent_to_content">24dp</dimen>
     <dimen name="default_button_radius">16dp</dimen>
+    <dimen name="small_button_radius">8dp</dimen>
     <dimen name="safe_zone_bottom_margin">28dp</dimen>
     <dimen name="debug_text_size">50sp</dimen>
 </resources>
