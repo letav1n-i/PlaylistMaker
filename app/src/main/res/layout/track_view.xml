@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/track_item">
+
+    <ImageView
+        android:id="@+id/trackCover"
+        style="@style/track_cover"
+        tools:background="@drawable/ic_empty_cover_track_45" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/small_padding"
+        android:textAlignment="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/trackName"
+                style="@style/track_name"
+                tools:text="Yesterday (Remastered 2009)" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/artistName"
+                    style="@style/track_subtitle"
+                    tools:text="The Beatles" />
+
+                <ImageView style="@style/track_subtitle_separator" />
+
+                <TextView
+                    android:id="@+id/trackTime"
+                    style="@style/track_subtitle"
+                    android:drawablePadding="@dimen/icon_padding_from_text"
+                    tools:text="2:55" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView style="@style/track_arrow" />
+
+</LinearLayout>
