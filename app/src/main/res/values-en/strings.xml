@@ -9,9 +9,4 @@
     <string name="share_app">Share the app</string>
     <string name="write_to_support">Write to support</string>
     <string name="user_agreement">User Agreement</string>
-    <string name="support_message">Thanks to the developers for the awesome app!</string>
-    <string name="share">Share</string>
-    <string name="topic_support">Message to the developers of the Playlist Maker app</string>
-    <string name="clear_accessibility">Clear search query</string>
-    <string name="back_accessibility">Go back</string>
 </resources>
