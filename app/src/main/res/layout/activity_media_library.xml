@@ -4,6 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/additional_screen_background"
     tools:context=".MediaLibraryActivity">
 
     <TextView
@@ -11,7 +12,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/media_library"
-        android:textColor="@color/YP_black"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/debug_text_size" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
