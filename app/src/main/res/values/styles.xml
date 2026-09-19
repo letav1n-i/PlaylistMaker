@@ -28,7 +28,7 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:src">@drawable/ic_arrow_back_24</item>
         <item name="android:tint">@color/icon_color</item>
-        <item name="android:contentDescription">@string/back_accessibility</item>
+        <item name="android:contentDescription">@string/accessibility_back</item>
     </style>
 
     <style name="title_toolbar">
@@ -107,6 +107,62 @@
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">@dimen/icon_padding_from_text</item>
         <item name="iconTint">@color/yp_black</item>
+    </style>
+
+    <style name="track_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">@dimen/base_track_padding</item>
+        <item name="android:paddingTop">@dimen/small_padding</item>
+        <item name="android:paddingRight">@dimen/small_track_padding</item>
+        <item name="android:paddingBottom">@dimen/small_padding</item>
+    </style>
+
+    <style name="track_cover">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">@dimen/small_padding</item>
+        <item name="android:contentDescription">@string/accessibility_track_cover</item>
+    </style>
+
+    <style name="track_arrow">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:src">@drawable/ic_arrow_right_24</item>
+        <item name="android:tint">@color/icon_secondary</item>
+    </style>
+
+    <style name="track_name">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/ys_text_regular</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_marginBottom">@dimen/micro_padding</item>
+    </style>
+
+    <style name="track_subtitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/ys_text_regular</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textSize">@dimen/subtitle_track_text_size</item>
+        <item name="android:textColor">@color/text_subtitle_color</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="track_subtitle_separator">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/ic_text_separator_13</item>
+        <item name="android:backgroundTint">@color/icon_secondary</item>
     </style>
 
 </resources>
