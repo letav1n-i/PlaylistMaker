@@ -27,7 +27,9 @@
 
         <EditText
             android:id="@+id/search_edit_text"
-            style="@style/search_input" />
+            style="@style/search_input"
+            android:imeOptions="actionDone"
+            android:singleLine="true" />
 
         <ImageButton
             android:id="@+id/clear_btn"
@@ -44,6 +46,52 @@
             android:src="@drawable/ic_clear_light_16"
             android:visibility="invisible" />
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/emptyResultPlaceholder"
+        style="@style/placeholder_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            style="@style/placeholder_image"
+            android:contentDescription="@string/empty_placeholder"
+            android:src="@drawable/ci_placeholder_empty_120" />
+
+        <TextView
+            style="@style/placeholder_text"
+            android:text="@string/empty_placeholder" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/errorPlaceholder"
+        style="@style/placeholder_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            style="@style/placeholder_image"
+            android:contentDescription="@string/error_placeholder"
+            android:src="@drawable/ci_placeholder_error_internet_120" />
+
+        <TextView
+            style="@style/placeholder_text"
+            android:layout_marginBottom="@dimen/placeholder_side_margin"
+            android:text="@string/error_placeholder" />
+
+        <Button
+            android:id="@+id/refreshSearchButton"
+            style="@style/refresh_button"
+            android:text="@string/refresh" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tracksList"
