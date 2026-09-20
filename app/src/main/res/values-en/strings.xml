@@ -15,4 +15,8 @@
     <string name="accessibility_clear">Clear search query</string>
     <string name="accessibility_back">Go back</string>
     <string name="accessibility_track_cover">Music track cover</string>
+    <string name="empty_placeholder">Nothing found</string>
+    <string name="error_placeholder">Connection problems Download failed. Check your internet connection.</string>
+    <string name="server_error_placeholder">Server error</string>
+    <string name="refresh">Refresh</string>
 </resources>
