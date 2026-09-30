@@ -9,4 +9,6 @@
     <color name="icon_color">@color/yp_white</color>
     <color name="hint_color">@color/yp_black</color>
     <color name="icon_secondary">@color/yp_white</color>
+    <color name="refresh_button_background">@color/yp_white</color>
+    <color name="refresh_button_text">@color/yp_black</color>
 </resources>
