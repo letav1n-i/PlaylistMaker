@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 data class Track(
+    var trackId: Long,
     var trackName: String?,
     var artistName: String?,
     @SerializedName("trackTimeMillis")

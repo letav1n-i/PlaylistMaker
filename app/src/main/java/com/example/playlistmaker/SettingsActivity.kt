@@ -1,11 +1,15 @@
 package com.example.playlistmaker
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.core.content.edit
+import com.example.playlistmaker.App.Companion.APP_THEME_KEY
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -13,15 +17,25 @@ class SettingsActivity : AppCompatActivity() {
     lateinit var shareAppBtn: TextView
     lateinit var supportBtn: TextView
     lateinit var userAgreementBtn: TextView
+    lateinit var themeSwitcher: Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
         initViews()
+        setThemeSwitcher((applicationContext as App).sharedPrefs)
 
         backBtnToolbar.setOnClickListener {
             openMainScreen()
+        }
+
+        themeSwitcher.setOnCheckedChangeListener{ switcher, checked ->
+            (applicationContext as App).switchTheme(checked)
+
+            (applicationContext as App).sharedPrefs.edit {
+                putBoolean(APP_THEME_KEY, checked)
+            }
         }
 
         shareAppBtn.setOnClickListener {
@@ -89,5 +103,10 @@ class SettingsActivity : AppCompatActivity() {
         shareAppBtn = findViewById<TextView>(R.id.shareAppTextView)
         supportBtn = findViewById<TextView>(R.id.writeSupportTextView)
         userAgreementBtn = findViewById<TextView>(R.id.userAgreementTextView)
+        themeSwitcher = findViewById(R.id.themeSwitcher)
+    }
+
+    private fun setThemeSwitcher(sharedPrefs: SharedPreferences) {
+        themeSwitcher.isChecked = sharedPrefs.getBoolean(APP_THEME_KEY, false)
     }
 }
