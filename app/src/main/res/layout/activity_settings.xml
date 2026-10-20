@@ -27,6 +27,7 @@
 
         <Switch
             style="@style/default_btn"
+            android:id="@+id/themeSwitcher"
             android:text="@string/dark_mode"
             android:thumbTint="@color/switch_thumb"
             android:trackTint="@color/switch_track"

@@ -48,6 +48,25 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/searchHistory"
+        style="@style/search_history_container"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            style="@style/search_history_title"
+            android:text="@string/search_history_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchHistoryList"
+            style="@style/search_list"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="1"
+            tools:listitem="@layout/track_view" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/emptyResultPlaceholder"
         style="@style/placeholder_container"
         android:layout_width="match_parent"
@@ -95,9 +114,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tracksList"
-        android:layout_width="match_parent"
+        style="@style/search_list"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_height="match_parent"
         tools:itemCount="5"
         tools:listitem="@layout/track_view" />
 </LinearLayout>
