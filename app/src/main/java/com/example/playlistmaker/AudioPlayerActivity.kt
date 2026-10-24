@@ -6,12 +6,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
+import androidx.core.content.IntentCompat
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
-const val TRACK_ID_EXTRA_KEY = "track_id"
+const val TRACK_EXTRA_KEY = "track"
 
 class AudioPlayerActivity : AppCompatActivity() {
     private lateinit var backBtn: ImageButton
@@ -34,7 +35,7 @@ class AudioPlayerActivity : AppCompatActivity() {
 
         initViews()
 
-        val track = findTrack()
+        val track = getTrack()
         if (track == null) {
             finish()
             return
@@ -68,12 +69,8 @@ class AudioPlayerActivity : AppCompatActivity() {
         countryGroup = findViewById(R.id.countryGroup)
     }
 
-    private fun findTrack(): Track? {
-        val trackId = intent.getLongExtra(TRACK_ID_EXTRA_KEY, -1L)
-
-        return readHistorySearch((applicationContext as App).sharedPrefs).firstOrNull {
-            it.trackId == trackId
-        }
+    private fun getTrack(): Track? {
+        return IntentCompat.getParcelableExtra(intent, TRACK_EXTRA_KEY, Track::class.java)
     }
 
     private fun setTrack(track: Track) {

@@ -61,14 +61,14 @@ class SearchActivity : AppCompatActivity() {
 
             writeHistorySearch()
 
-            openAudioPlayerScreen(track.trackId)
+            openAudioPlayerScreen(track)
         }
 
         searchAdapter.tracks = tracksSearch
         searchHistoryList.adapter = ConcatAdapter(searchAdapter, buttonAdapter)
 
         searchAdapter.onItemClick = { track ->
-            openAudioPlayerScreen(track.trackId)
+            openAudioPlayerScreen(track)
         }
 
         loadSearchResult()
@@ -252,12 +252,12 @@ class SearchActivity : AppCompatActivity() {
         outState.putString(SEARCH_INPUT_TAG, inputSearchText)
     }
 
-    private fun openAudioPlayerScreen(trackId: Long) {
+    private fun openAudioPlayerScreen(track: Track) {
         val audioPlayerScreen = Intent(
             this,
             AudioPlayerActivity::class.java
         )
-        audioPlayerScreen.putExtra(TRACK_ID_EXTRA_KEY, trackId)
+        audioPlayerScreen.putExtra(TRACK_EXTRA_KEY, track)
 
         startActivity(audioPlayerScreen)
     }
