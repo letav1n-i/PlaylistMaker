@@ -7,14 +7,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout style="@style/main_toolbar">
+    <LinearLayout
+        style="@style/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_marginBottom="@dimen/toolbar_indent_to_content">
 
         <ImageButton
             android:id="@+id/back_btn_toolbar"
-            style="@style/back_btn_toolbar" />
+            style="@style/back_btn_toolbar"
+            android:layout_width="@dimen/toolbar_icon_size"
+            android:layout_height="@dimen/toolbar_icon_size" />
 
         <TextView
             style="@style/title_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/toolbar_title_padding"
+            android:layout_marginRight="@dimen/toolbar_title_padding"
             android:text="@string/settings" />
     </LinearLayout>
 
@@ -28,6 +38,8 @@
         <Switch
             style="@style/default_btn"
             android:id="@+id/themeSwitcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/dark_mode"
             android:thumbTint="@color/switch_thumb"
             android:trackTint="@color/switch_track"
@@ -37,18 +49,24 @@
         <TextView
             android:id="@+id/shareAppTextView"
             style="@style/default_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/share_app"
             app:drawableEndCompat="@drawable/ic_share_24" />
 
         <TextView
             android:id="@+id/writeSupportTextView"
             style="@style/default_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/write_to_support"
             app:drawableEndCompat="@drawable/ic_support_24" />
 
         <TextView
             android:id="@+id/userAgreementTextView"
             style="@style/default_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/user_agreement"
             app:drawableEndCompat="@drawable/ic_arrow_right_24" />
     </LinearLayout>

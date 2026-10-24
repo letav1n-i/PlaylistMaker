@@ -1,5 +1,6 @@
 package com.example.playlistmaker
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
@@ -59,10 +60,16 @@ class SearchActivity : AppCompatActivity() {
             searchAdapter.notifyDataSetChanged()
 
             writeHistorySearch()
+
+            openAudioPlayerScreen(track)
         }
 
         searchAdapter.tracks = tracksSearch
         searchHistoryList.adapter = ConcatAdapter(searchAdapter, buttonAdapter)
+
+        searchAdapter.onItemClick = { track ->
+            openAudioPlayerScreen(track)
+        }
 
         loadSearchResult()
 
@@ -177,18 +184,9 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun readHistorySearch(): ArrayList<Track> {
-        val json = (applicationContext as App).sharedPrefs.getString(SEARCH_RESULT_KEY, "") ?: ""
-
-        if (json.isEmpty()) return ArrayList()
-
-        val array = Gson().fromJson(json, Array<Track>::class.java)
-        return array?.toCollection(ArrayList()) ?: ArrayList()
-    }
-
     private fun loadSearchResult() {
         tracksSearch.clear()
-        tracksSearch.addAll(readHistorySearch())
+        tracksSearch.addAll(readHistorySearch((applicationContext as App).sharedPrefs))
         searchAdapter.notifyDataSetChanged()
     }
 
@@ -254,9 +252,18 @@ class SearchActivity : AppCompatActivity() {
         outState.putString(SEARCH_INPUT_TAG, inputSearchText)
     }
 
+    private fun openAudioPlayerScreen(track: Track) {
+        val audioPlayerScreen = Intent(
+            this,
+            AudioPlayerActivity::class.java
+        )
+        audioPlayerScreen.putExtra(TRACK_EXTRA_KEY, track)
+
+        startActivity(audioPlayerScreen)
+    }
+
     private companion object {
         const val SEARCH_INPUT_TAG = "SEARCH_INPUT"
         const val SEARCH_INPUT_QUERY = ""
-        const val SEARCH_RESULT_KEY = "search_result_list_key"
     }
 }
