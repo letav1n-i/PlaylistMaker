@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     style="@style/track_item">
 
     <ImageView
         android:id="@+id/trackCover"
         style="@style/track_cover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/small_padding"
         tools:background="@drawable/ic_empty_cover_track_45" />
 
     <LinearLayout
@@ -25,6 +30,9 @@
             <TextView
                 android:id="@+id/trackName"
                 style="@style/track_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/micro_padding"
                 tools:text="Yesterday (Remastered 2009)" />
 
             <LinearLayout
@@ -35,13 +43,21 @@
                 <TextView
                     android:id="@+id/artistName"
                     style="@style/track_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     tools:text="The Beatles" />
 
-                <ImageView style="@style/track_subtitle_separator" />
+                <ImageView
+                    style="@style/track_subtitle_separator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
 
                 <TextView
                     android:id="@+id/trackTime"
                     style="@style/track_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/icon_padding_from_text"
                     tools:text="2:55" />
             </LinearLayout>
@@ -50,6 +66,10 @@
 
     </LinearLayout>
 
-    <ImageView style="@style/track_arrow" />
+    <ImageView
+        style="@style/track_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical" />
 
 </LinearLayout>

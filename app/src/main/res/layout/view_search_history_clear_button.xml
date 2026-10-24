@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     style="@style/search_history_clear_container">
 
     <Button
         android:id="@+id/clearSearchHistoryButton"
-        style="@style/search_history_clear_button"
+        style="@style/refresh_button"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/refresh_button_height"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/history_clear_button_margin"
+        android:layout_marginBottom="@dimen/history_clear_button_margin"
         android:text="@string/clear_history" />
 
 </LinearLayout>

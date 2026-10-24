@@ -37,4 +37,11 @@
     <dimen name="history_title_top_padding">18dp</dimen>
     <dimen name="history_title_bottom_padding">12dp</dimen>
     <dimen name="history_clear_button_margin">24dp</dimen>
+
+    <dimen name="audio_player_title_text_size">22sp</dimen>
+    <dimen name="audio_player_artist_text_size">14sp</dimen>
+    <dimen name="audio_player_info_text_size">13sp</dimen>
+    <dimen name="audio_player_info_padding_top">9dp</dimen>
+    <dimen name="audio_player_info_padding_bottom">8dp</dimen>
+    <dimen name="audio_player_content_bottom_padding">20dp</dimen>
 </resources>

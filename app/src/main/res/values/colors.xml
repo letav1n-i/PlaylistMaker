@@ -18,4 +18,5 @@
     <color name="icon_secondary">@color/yp_text_grey</color>
     <color name="refresh_button_background">@color/yp_black</color>
     <color name="refresh_button_text">@color/yp_white</color>
+    <color name="round_button_background">#401A1B22</color>
 </resources>

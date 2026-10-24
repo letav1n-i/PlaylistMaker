@@ -2,10 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     style="@style/main_background">
 
     <TextView
         style="@style/additional_toolbar_without_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_marginBottom="@dimen/toolbar_indent_to_content"
         android:textColor="@color/yp_white"
         android:text="@string/application_name" />
 
@@ -20,12 +25,18 @@
         <Button
             android:id="@+id/search_btn"
             style="@style/big_button"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:text="@string/search"
             app:icon="@drawable/ic_search_24" />
 
         <Button
             android:id="@+id/library_btn"
             style="@style/big_button"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginTop="@dimen/default_padding"
             android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/media_library"
@@ -34,6 +45,9 @@
         <Button
             android:id="@+id/settings_btn"
             style="@style/big_button"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:text="@string/settings"
             app:icon="@drawable/ic_settings_24" />
     </LinearLayout>

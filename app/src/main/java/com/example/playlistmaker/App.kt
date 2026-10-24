@@ -14,11 +14,7 @@ class App : Application() {
 
         sharedPrefs = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
 
-        if (sharedPrefs.getBoolean(APP_THEME_KEY, false)) {
-            switchTheme(true)
-        } else {
-            switchTheme(false)
-        }
+        switchTheme(sharedPrefs.getBoolean(APP_THEME_KEY, false))
     }
 
     fun switchTheme(darkThemeEnabled: Boolean) {
