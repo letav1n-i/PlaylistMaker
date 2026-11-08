@@ -18,7 +18,8 @@ data class Track(
     // The two-letter country code for the store you want to search.
     // The search uses the default store front for the specified country. For example:
     // US. The default is US.
-    var country: String?
+    var country: String?,
+    var previewUrl: String?
 
 
 ) : Parcelable {
