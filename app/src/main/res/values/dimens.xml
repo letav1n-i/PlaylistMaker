@@ -44,4 +44,5 @@
     <dimen name="audio_player_info_padding_top">9dp</dimen>
     <dimen name="audio_player_info_padding_bottom">8dp</dimen>
     <dimen name="audio_player_content_bottom_padding">20dp</dimen>
+    <dimen name="search_progress_top_margin">140dp</dimen>
 </resources>
