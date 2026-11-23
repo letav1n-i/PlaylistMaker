@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AudioPlayerActivity">
+    tools:context=".ui.audioplayer.AudioPlayerActivity">
 
     <LinearLayout
         android:id="@+id/toolbar"
@@ -129,8 +129,7 @@
                 android:text="@string/start_progress_track"
                 app:layout_constraintEnd_toEndOf="@id/right_base_guideline"
                 app:layout_constraintStart_toStartOf="@id/left_base_guideline"
-                app:layout_constraintTop_toBottomOf="@+id/playBtn"
-                tools:text="00:00" />
+                app:layout_constraintTop_toBottomOf="@+id/playBtn" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/left_additional_guideline"

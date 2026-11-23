@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.search
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,17 +12,21 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.StateViewTools.Companion.hideKeyboard
-import com.google.gson.Gson
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivity
+import com.example.playlistmaker.Creator
+import com.example.playlistmaker.R
+import com.example.playlistmaker.StateViewTools
+import com.example.playlistmaker.domain.api.TracksInteractor
+import com.example.playlistmaker.domain.models.SearchResult
+import com.example.playlistmaker.ui.audioplayer.TRACK_EXTRA_KEY
+import com.example.playlistmaker.ui.tracks.TrackAdapter
+import com.example.playlistmaker.ui.tracks.toParcelable
+import com.example.playlistmaker.domain.models.Track
 
 class SearchActivity : AppCompatActivity() {
     lateinit var searchEditText: EditText
@@ -42,7 +46,9 @@ class SearchActivity : AppCompatActivity() {
     private val buttonAdapter = SearchHistoryButtonAdapter { clearSearchHistory() }
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var searchProgressBar: ProgressBar
-    private var searchCall: Call<SearchTrackResponse>? = null
+    private val tracksInteractor = Creator.provideTracksInteractor()
+    private val historyInteractor by lazy { Creator.provideSearchHistoryInteractor(applicationContext) }
+    private var searchGeneration = 0
     private var lastTrackClickTime: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,18 +62,10 @@ class SearchActivity : AppCompatActivity() {
 
         adapter.onItemClick = { track ->
             if (clickDebounce()) {
-                if (tracksSearch.any { it.trackId == track.trackId }) {
-                    tracksSearch.removeAll { it.trackId == track.trackId }
-                }
-
-                tracksSearch.add(0, track)
-
-                while (tracksSearch.size > 10) {
-                    tracksSearch.removeAt(tracksSearch.size - 1)
-                }
+                val history = historyInteractor.addTrack(track)
+                tracksSearch.clear()
+                tracksSearch.addAll(history)
                 searchAdapter.notifyDataSetChanged()
-
-                writeHistorySearch()
 
                 openAudioPlayerScreen(track)
             }
@@ -111,7 +109,7 @@ class SearchActivity : AppCompatActivity() {
 
         searchEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                hideKeyboard(this)
+                StateViewTools.hideKeyboard(this)
                 performSearch()
                 true
             } else {
@@ -134,37 +132,29 @@ class SearchActivity : AppCompatActivity() {
             return
         }
         showLoading()
-        val request = NetworkClient.trackService.search(term = query)
-        searchCall = request
-        request.enqueue(object : Callback<SearchTrackResponse> {
-                override fun onResponse(
-                    call: Call<SearchTrackResponse>,
-                    response: Response<SearchTrackResponse>
-                ) {
-                    if (call !== searchCall) return
-                    searchCall = null
-                    if (response.code() == 200) {
-                        tracks.clear()
-                        val results = response.body()?.results.orEmpty().filterNotNull()
-                        if (results.isEmpty()) {
-                            showEmpty()
-                        } else {
-                            showResults()
-                            tracks.addAll(results)
-                            adapter.notifyDataSetChanged()
-                            tracksList.layoutManager?.scrollToPosition(0)
+        val generation = searchGeneration
+        tracksInteractor.searchTracks(query, object : TracksInteractor.TracksConsumer {
+            override fun consume(result: SearchResult) {
+                handler.post {
+                    if (generation == searchGeneration && !isFinishing && !isDestroyed) {
+                        when (result) {
+                            is SearchResult.Success -> {
+                                tracks.clear()
+                                tracks.addAll(result.tracks)
+                                adapter.notifyDataSetChanged()
+                                if (tracks.isEmpty()) {
+                                    showEmpty()
+                                } else {
+                                    showResults()
+                                    tracksList.layoutManager?.scrollToPosition(0)
+                                }
+                            }
+                            SearchResult.Error -> showError()
                         }
-                    } else {
-                        showError()
                     }
                 }
-
-                override fun onFailure(call: Call<SearchTrackResponse>, t: Throwable) {
-                    if (call !== searchCall) return
-                    searchCall = null
-                    showError()
-                }
-            })
+            }
+        })
     }
 
     fun inputSearchTextWatcher() {
@@ -201,30 +191,22 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun writeHistorySearch() {
-        val json = Gson().toJson(tracksSearch)
-
-        (applicationContext as App).sharedPrefs.edit {
-            putString(SEARCH_RESULT_KEY, json)
-        }
-    }
-
     private fun loadSearchResult() {
         tracksSearch.clear()
-        tracksSearch.addAll(readHistorySearch((applicationContext as App).sharedPrefs))
+        tracksSearch.addAll(historyInteractor.getHistory())
         searchAdapter.notifyDataSetChanged()
     }
 
     private fun clearSearchHistory() {
         tracksSearch.clear()
-        writeHistorySearch()
+        historyInteractor.clearHistory()
         searchAdapter.notifyDataSetChanged()
         updateHistoryVisibility()
     }
 
     private fun clearInput() {
         searchEditText.setText("")
-        hideKeyboard(this)
+        StateViewTools.hideKeyboard(this)
         tracks.clear()
         adapter.notifyDataSetChanged()
         tracksList.isGone = true
@@ -286,7 +268,7 @@ class SearchActivity : AppCompatActivity() {
             this,
             AudioPlayerActivity::class.java
         )
-        audioPlayerScreen.putExtra(TRACK_EXTRA_KEY, track)
+        audioPlayerScreen.putExtra(TRACK_EXTRA_KEY, track.toParcelable())
 
         startActivity(audioPlayerScreen)
     }
@@ -302,15 +284,15 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun cancelSearch() {
-        val previousCall = searchCall
-        searchCall = null
-        previousCall?.cancel()
+        searchGeneration++
+        tracksInteractor.cancelSearch()
         searchProgressBar.isGone = true
     }
 
     override fun onDestroy() {
         handler.removeCallbacks(searchRunnable)
         cancelSearch()
+        tracksInteractor.release()
         super.onDestroy()
     }
 
