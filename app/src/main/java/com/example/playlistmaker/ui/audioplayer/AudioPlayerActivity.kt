@@ -1,6 +1,5 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.audioplayer
 
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +13,12 @@ import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.playlistmaker.R
+import com.example.playlistmaker.Creator
+import com.example.playlistmaker.StateViewTools
+import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.domain.models.PlayerState
+import com.example.playlistmaker.ui.tracks.TrackParcelable
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
@@ -36,8 +41,7 @@ class AudioPlayerActivity : AppCompatActivity() {
     private lateinit var trackCountry: TextView
     private lateinit var trackTime: TextView
     private lateinit var playBtn: ImageButton
-    private var mediaPlayer = MediaPlayer()
-    private var playerState = STATE_DEFAULT
+    private val playerInteractor = Creator.providePlayerInteractor()
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,7 +99,8 @@ class AudioPlayerActivity : AppCompatActivity() {
     }
 
     private fun getTrack(): Track? {
-        return IntentCompat.getParcelableExtra(intent, TRACK_EXTRA_KEY, Track::class.java)
+        return IntentCompat.getParcelableExtra(intent, TRACK_EXTRA_KEY, TrackParcelable::class.java)
+            ?.toDomain()
     }
 
     private fun setTrack(track: Track) {
@@ -131,24 +136,26 @@ class AudioPlayerActivity : AppCompatActivity() {
     }
 
     private fun preparePlayer(url: String) {
-        mediaPlayer.setDataSource(url)
-        mediaPlayer.setOnPreparedListener {
-            playBtn.isEnabled = true
-            playerState = STATE_PREPARED
+        playerInteractor.prepare(url) { state ->
+            when (state) {
+                PlayerState.PREPARED -> {
+                    playBtn.isEnabled = true
+                    playBtn.setImageResource(R.drawable.ic_play_100)
+                    handler.removeCallbacks(progressUpdater)
+                    trackTime.text = getString(R.string.start_progress_track)
+                }
+                PlayerState.ERROR -> {
+                    playBtn.isEnabled = false
+                    playBtn.setImageResource(R.drawable.ic_play_100)
+                    handler.removeCallbacks(progressUpdater)
+                }
+                else -> Unit
+            }
         }
-        mediaPlayer.setOnCompletionListener {
-            playerState = STATE_PREPARED
-            playBtn.setImageResource(R.drawable.ic_play_100)
-
-            handler.removeCallbacks(progressUpdater)
-            trackTime.text = "00:00"
-        }
-        mediaPlayer.prepareAsync()
     }
 
     private fun startPlayer() {
-        mediaPlayer.start()
-        playerState = STATE_PLAYING
+        playerInteractor.play()
         playBtn.setImageResource(R.drawable.ic_pause_100)
 
         handler.removeCallbacks(progressUpdater)
@@ -156,31 +163,31 @@ class AudioPlayerActivity : AppCompatActivity() {
     }
 
     private fun pausePlayer() {
-        mediaPlayer.pause()
-        playerState = STATE_PAUSED
+        playerInteractor.pause()
         playBtn.setImageResource(R.drawable.ic_play_100)
 
         handler.removeCallbacks(progressUpdater)
     }
 
     private fun playbackControl() {
-        when(playerState) {
-            STATE_PLAYING -> {
+        when (playerInteractor.state) {
+            PlayerState.PLAYING -> {
                 pausePlayer()
             }
-            STATE_PREPARED, STATE_PAUSED -> {
+            PlayerState.PREPARED, PlayerState.PAUSED -> {
                 startPlayer()
             }
+            else -> Unit
         }
     }
 
 
     private val progressUpdater = object : Runnable {
         override fun run() {
-            if (playerState == STATE_PLAYING) {
+            if (playerInteractor.state == PlayerState.PLAYING) {
                 trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).apply {
                     timeZone = TimeZone.getTimeZone("UTC")
-                }.format(mediaPlayer.currentPosition)
+                }.format(playerInteractor.getCurrentPosition())
 
                 handler.postDelayed(this, PROGRESS_UPDATE_DELAY_MILLIS)
             }
@@ -189,7 +196,7 @@ class AudioPlayerActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        if (playerState == STATE_PLAYING) {
+        if (playerInteractor.state == PlayerState.PLAYING) {
             pausePlayer()
         }
     }
@@ -197,15 +204,11 @@ class AudioPlayerActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacks(progressUpdater)
-        mediaPlayer.release()
+        playerInteractor.release()
     }
 
     companion object {
         private const val PROGRESS_UPDATE_DELAY_MILLIS = 200L
-        private const val STATE_DEFAULT = 0
-        private const val STATE_PREPARED = 1
-        private const val STATE_PLAYING = 2
-        private const val STATE_PAUSED = 3
     }
 
 }

@@ -1,17 +1,18 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.settings
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
-import androidx.core.content.edit
-import com.example.playlistmaker.App.Companion.APP_THEME_KEY
+import com.example.playlistmaker.App
+import com.example.playlistmaker.Creator
+import com.example.playlistmaker.R
 
 class SettingsActivity : AppCompatActivity() {
+    private val settingsInteractor by lazy { Creator.provideSettingsInteractor(applicationContext) }
 
     lateinit var backBtnToolbar: ImageButton
     lateinit var shareAppBtn: TextView
@@ -24,18 +25,15 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         initViews()
-        setThemeSwitcher((applicationContext as App).sharedPrefs)
+        themeSwitcher.isChecked = settingsInteractor.isDarkThemeEnabled()
 
         backBtnToolbar.setOnClickListener {
             openMainScreen()
         }
 
-        themeSwitcher.setOnCheckedChangeListener{ switcher, checked ->
+        themeSwitcher.setOnCheckedChangeListener{ _, checked ->
+            settingsInteractor.setDarkThemeEnabled(checked)
             (applicationContext as App).switchTheme(checked)
-
-            (applicationContext as App).sharedPrefs.edit {
-                putBoolean(APP_THEME_KEY, checked)
-            }
         }
 
         shareAppBtn.setOnClickListener {
@@ -57,7 +55,8 @@ class SettingsActivity : AppCompatActivity() {
         shareIntent.setType("text/plain")
         shareIntent.putExtra(
             Intent.EXTRA_TEXT,
-            getString(R.string.course_url
+            getString(
+                R.string.course_url
             )
         )
 
@@ -106,7 +105,4 @@ class SettingsActivity : AppCompatActivity() {
         themeSwitcher = findViewById(R.id.themeSwitcher)
     }
 
-    private fun setThemeSwitcher(sharedPrefs: SharedPreferences) {
-        themeSwitcher.isChecked = sharedPrefs.getBoolean(APP_THEME_KEY, false)
-    }
 }

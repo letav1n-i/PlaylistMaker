@@ -1,15 +1,9 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.domain.models
 
-import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 data class Track(
     var trackId: Long,
     var trackName: String?,
     var artistName: String?,
-    @SerializedName("trackTimeMillis")
     var trackTime: Int?,
     var artworkUrl100: String?,
     var collectionName: String?,
@@ -22,7 +16,7 @@ data class Track(
     var previewUrl: String?
 
 
-) : Parcelable {
+) {
     fun formatTime(): String {
         return trackTime?.let {
             val totalSeconds = it / 1000

@@ -1,10 +1,11 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.search
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.R
 
 class SearchHistoryButtonAdapter(
     private val onClick: () -> Unit
